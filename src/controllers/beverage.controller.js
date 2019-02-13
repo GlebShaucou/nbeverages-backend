@@ -107,7 +107,7 @@ const update = (req, res) => {
 };
 
 const deleteById = (req, res) => {
-    Beverage.findByIdAndRemove(req.body.beverageId)
+    Beverage.findByIdAndDelete(req.body.beverageId)
         .then(beverage => {
             if(!beverage) {
                 return res.status(404).send({
