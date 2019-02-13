@@ -1,7 +1,6 @@
 const Beverage = require('../models/beverage.model');
 
 const create = (req, res) => {
-    console.log(req.body);
     if (!req.body.type) {
         return res.status(400).send({
             message: 'Request type can not be empty.',
@@ -44,11 +43,11 @@ const getAll = (req, res) => {
 };
 
 const getById = (req, res) => {
-    Beverage.findById(req.params.beverageId)
+    Beverage.findById(req.body.beverageId)
         .then(beverage => {
             if(!beverage) {
                 return res.status(200).send({
-                    message: `Beverage with id ${req.params.beverageId} not found`,
+                    message: `Beverage with id ${req.body.beverageId} not found`,
                     beverage: null,
                 });
             }
@@ -57,7 +56,7 @@ const getById = (req, res) => {
         }).catch(error => {
             if(error.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: `Beverage with id ${req.params.beverageId} not found`,
+                    message: `Beverage with id ${req.body.beverageId} not found`,
                     beverage: null,
                 });
             }
@@ -77,13 +76,13 @@ const update = (req, res) => {
         });
     }
 
-    Beverage.findByIdAndUpdate(req.params.beverageId, {
+    Beverage.findByIdAndUpdate(req.body.beverageId, {
         ...req.body,
     }, { new: true })
         .then(beverage => {
             if(!beverage) {
                 return res.status(404).send({
-                    message: `Beverage with id ${req.params.beverageId} not found`,
+                    message: `Beverage with id ${req.body.beverageId} not found`,
                     beverage: null,
                 });
             }
@@ -95,7 +94,7 @@ const update = (req, res) => {
         }).catch(error => {
             if(error.kind === 'ObjectId') {
                 return res.status(404).send({
-                    message: `Beverage with id ${req.params.beverageId} not found`,
+                    message: `Beverage with id ${req.body.beverageId} not found`,
                     beverage: null,
                 });
             }
@@ -108,11 +107,11 @@ const update = (req, res) => {
 };
 
 const deleteById = (req, res) => {
-    Beverage.findByIdAndRemove(req.params.beverageId)
+    Beverage.findByIdAndRemove(req.body.beverageId)
         .then(beverage => {
             if(!beverage) {
                 return res.status(404).send({
-                    message: `Beverage with id ${req.params.beverageId} not found`,
+                    message: `Beverage with id ${req.body.beverageId} not found`,
                 });
             }
 
@@ -122,7 +121,7 @@ const deleteById = (req, res) => {
         }).catch(error => {
             if(error.kind === 'ObjectId' || error.name === 'NotFound') {
                 return res.status(404).send({
-                    message: `Beverage with id ${req.params.beverageId} not found`,
+                    message: `Beverage with id ${req.body.beverageId} not found`,
                     beverage: null,
                 });
             }
