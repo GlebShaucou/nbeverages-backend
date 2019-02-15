@@ -115,9 +115,7 @@ const deleteById = (req, res) => {
                 });
             }
 
-            res.status(200).send({
-                message: "Note deleted successfully!",
-            });
+            getAll(req, res);
         }).catch(error => {
             if(error.kind === 'ObjectId' || error.name === 'NotFound') {
                 return res.status(404).send({
