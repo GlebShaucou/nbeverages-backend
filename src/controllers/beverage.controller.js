@@ -117,13 +117,6 @@ const deleteById = (req, res) => {
 
             getAll(req, res);
         }).catch(error => {
-            if(error.kind === 'ObjectId' || error.name === 'NotFound') {
-                return res.status(404).send({
-                    message: `Beverage with id ${req.body.beverageId} not found`,
-                    beverage: null,
-                });
-            }
-
             return res.status(500).send({
                 message: 'Some error occurred.',
                 error,

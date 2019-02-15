@@ -14,8 +14,8 @@ mongoose.connect(dbConfig.url, { useNewUrlParser: true })
     .then(() => {
         console.log('Successfully connected to the database');
     })
-    .catch(() => {
-        console.log('Could not connect to the database. Exiting now.', err);
+    .catch((error) => {
+        console.log('Could not connect to the database. Exiting now.', error);
 
         process.exit();
     });
@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
 
     if ('OPTIONS' === req.method) {
-        res.send(200);
+        res.sendStatus(200);
     }
     else {
         next();
