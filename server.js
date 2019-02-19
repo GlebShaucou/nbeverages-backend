@@ -5,11 +5,7 @@ const dbConfig = require('./config/database.config');
 const beverageRoutes = require('./src/routes/beverage.routes');
 
 const app = express();
-let port = process.env.PORT;
-
-if (port === null || port === '') {
-    port = 3003;
-}
+const port = process.env.PORT || 3003;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
