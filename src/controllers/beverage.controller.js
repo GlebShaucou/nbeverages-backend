@@ -1,37 +1,12 @@
 const Beverage = require('../models/beverage.model');
-
-const create = (req, res) => {
-    if (!req.body.type) {
-        return res.status(400).send({
-            message: 'Request type can not be empty.',
-            error: 'Request may not be empty',
-        });
-    }
-
-    const beverage = new Beverage({
-        ...req.body,
-    });
-
-    beverage.save()
-        .then(data => {
-            res.status(200).send({
-                data,
-                message: 'New beverage was successfully added.'
-            });
-        })
-        .catch(error => {
-            res.status(500).send({
-                message: 'Some error occurred.',
-                error,
-            });
-        });
-};
+const utils = require('../utils');
 
 const getAll = (req, res) => {
     Beverage.find()
         .then(beverages => {
             res.status(200).send({
                 beverages,
+                error: '',
             });
         })
         .catch(error => {
@@ -49,20 +24,49 @@ const getById = (req, res) => {
                 return res.status(200).send({
                     message: `Beverage with id ${req.body.beverageId} not found`,
                     beverage: null,
+                    error: '',
                 });
             }
 
             res.status(200).send(beverage);
         }).catch(error => {
-            if(error.kind === 'ObjectId') {
-                return res.status(404).send({
-                    message: `Beverage with id ${req.body.beverageId} not found`,
-                    beverage: null,
-                });
-            }
+        if(error.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: `Beverage with id ${req.body.beverageId} not found`,
+                beverage: null,
+                error,
+            });
+        }
 
-            return res.status(500).send({
-                message: 'Some error occurred.',
+        return res.status(500).send({
+            message: 'Some error occurred.',
+            error,
+        });
+    });
+};
+
+const create = (req, res) => {
+    const requestBody = req.body;
+    const errorMessage = utils.validateNewBeverage(requestBody);
+
+    if (errorMessage) {
+        return res.status(400).send({
+            message: 'Validation error occurred.',
+            error: errorMessage,
+        });
+    }
+
+    const beverage = new Beverage({
+        ...requestBody,
+    });
+
+    beverage.save()
+        .then(data => {
+            getAll(req, res);
+        })
+        .catch(error => {
+            res.status(500).send({
+                message: 'Changes are not saved some errors occurred.',
                 error,
             });
         });
@@ -84,6 +88,7 @@ const update = (req, res) => {
                 return res.status(404).send({
                     message: `Beverage with id ${req.body.beverageId} not found`,
                     beverage: null,
+                    error: '',
                 });
             }
 
@@ -96,6 +101,7 @@ const update = (req, res) => {
                 return res.status(404).send({
                     message: `Beverage with id ${req.body.beverageId} not found`,
                     beverage: null,
+                    error,
                 });
             }
 
@@ -112,6 +118,7 @@ const deleteById = (req, res) => {
             if(!beverage) {
                 return res.status(404).send({
                     message: `Beverage with id ${req.body.beverageId} not found`,
+                    error: '',
                 });
             }
 
