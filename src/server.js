@@ -5,7 +5,11 @@ const dbConfig = require('../config/database.config');
 const beverageRoutes = require('./routes/beverage.routes');
 
 const app = express();
-const PORT = 3003;
+let port = process.env.PORT;
+
+if (port === null || port === '') {
+    port = 3003;
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -39,6 +43,6 @@ app.get('/', (req, res) => {
 
 beverageRoutes(app);
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+app.listen(port, () => {
+    console.log(`Server is listening on port ${port}`);
 });
