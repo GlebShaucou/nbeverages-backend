@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const dbConfig = require('../config/database.config');
-const beverageRoutes = require('./routes/beverage.routes');
+const dbConfig = require('./config/database.config');
+const beverageRoutes = require('./src/routes/beverage.routes');
 
 const app = express();
 let port = process.env.PORT;
