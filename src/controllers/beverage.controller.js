@@ -31,7 +31,7 @@ const getById = (req, res) => {
             res.status(200).send(beverage);
         }).catch(error => {
         if(error.kind === 'ObjectId') {
-            return res.status(404).send({
+            return res.status(400).send({
                 message: `Beverage with id ${req.body.beverageId} not found`,
                 beverage: null,
                 error,
@@ -85,26 +85,14 @@ const update = (req, res) => {
     }, { new: true })
         .then(beverage => {
             if(!beverage) {
-                return res.status(404).send({
+                return res.status(400).send({
                     message: `Beverage with id ${req.body.beverageId} not found`,
-                    beverage: null,
-                    error: '',
+                    error: `Beverage with id ${req.body.beverageId} not found`,
                 });
             }
 
-            res.status(200).send({
-                beverage,
-                message: 'Beverage was successfully updated.'
-            });
+            getAll(req, res);
         }).catch(error => {
-            if(error.kind === 'ObjectId') {
-                return res.status(404).send({
-                    message: `Beverage with id ${req.body.beverageId} not found`,
-                    beverage: null,
-                    error,
-                });
-            }
-
             return res.status(500).send({
                 message: 'Some error occurred.',
                 error,
@@ -116,7 +104,7 @@ const deleteById = (req, res) => {
     Beverage.findByIdAndDelete(req.body.beverageId)
         .then(beverage => {
             if(!beverage) {
-                return res.status(404).send({
+                return res.status(400).send({
                     message: `Beverage with id ${req.body.beverageId} not found`,
                     error: '',
                 });
