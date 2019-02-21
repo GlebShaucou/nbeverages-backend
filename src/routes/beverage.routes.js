@@ -1,13 +1,13 @@
 module.exports = (app) => {
     const beverage = require('../controllers/beverage.controller');
 
-    app.get('/beverages', beverage.getAll);
+    app.get('/api/beverages', beverage.getAll);
 
-    app.get('/beverages/:beverageId', beverage.getById);
+    app.get('/api/beverages/:beverageId', beverage.getById);
 
-    app.post('/beverages', beverage.create);
+    app.post('/api/beverages', beverage.create);
 
-    app.put('/beverages', beverage.update);
+    app.put('/api/beverages', beverage.update);
 
-    app.delete('/beverages', beverage.deleteById);
+    app.delete('/api/beverages', beverage.deleteById);
 };

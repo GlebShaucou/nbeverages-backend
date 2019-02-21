@@ -1,4 +1,4 @@
-const getBeverageValidationErrorMessage = (field) => `${field} is not set.`;
+const getValidationErrorMessage = (field) => `${field} is not set.`;
 
 const validateNewBeverage = (beverage) => {
     if (!beverage) {
@@ -6,41 +6,62 @@ const validateNewBeverage = (beverage) => {
     }
 
     if (!beverage.type) {
-        return getBeverageValidationErrorMessage('type');
+        return getValidationErrorMessage('type');
     }
 
     if (!beverage.imgSrc) {
-        return getBeverageValidationErrorMessage('imgSrc');
+        return getValidationErrorMessage('imgSrc');
     }
 
     if (!beverage.name) {
-        return getBeverageValidationErrorMessage('name');
+        return getValidationErrorMessage('name');
     }
 
     if (!beverage.description) {
-        return getBeverageValidationErrorMessage('description');
+        return getValidationErrorMessage('description');
     }
 
     if (!beverage.category) {
-        return getBeverageValidationErrorMessage('category');
+        return getValidationErrorMessage('category');
     }
 
     if (!beverage.quantity) {
-        return getBeverageValidationErrorMessage('quantity');
+        return getValidationErrorMessage('quantity');
     }
 
     if (!beverage.price) {
-        return getBeverageValidationErrorMessage('price');
+        return getValidationErrorMessage('price');
     }
 
     if (!beverage.currency) {
-        return getBeverageValidationErrorMessage('currency');
+        return getValidationErrorMessage('currency');
+    }
+
+    return '';
+};
+
+const validateNewUser = (user) => {
+    if (!user) {
+        return 'Request body can not be empty.';
+    }
+
+    if (!user.username) {
+        return getValidationErrorMessage('username');
+    }
+
+    if (!user.email) {
+        return getValidationErrorMessage('email');
+    }
+
+    if (!user.password) {
+        return getValidationErrorMessage('password');
     }
 
     return '';
 };
 
 module.exports = {
-    getBeverageValidationErrorMessage,
+    getValidationErrorMessage,
     validateNewBeverage,
+    validateNewUser,
 };

@@ -1,14 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
+
 const dbConfig = require('./config/database.config');
 const beverageRoutes = require('./src/routes/beverage.routes');
-
-const app = express();
-const port = process.env.PORT || 3003;
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+const userRoutes = require('./src/routes/user.routes');
 
 mongoose.connect(dbConfig.url, { useNewUrlParser: true })
     .then(() => {
@@ -19,6 +16,16 @@ mongoose.connect(dbConfig.url, { useNewUrlParser: true })
 
         process.exit();
     });
+
+const app = express();
+const port = process.env.PORT || 3003;
+
+app.use(passport.initialize());
+
+require('./passport')(passport);
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -38,6 +45,7 @@ app.get('/', (req, res) => {
 });
 
 beverageRoutes(app);
+userRoutes(app);
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
