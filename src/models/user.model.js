@@ -38,24 +38,21 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.statics.authenticate = function({ email, password }, callback) {
     this.findOne({ email })
-        .then((err, user) => {
-            if (err) {
-                return callback(err)
-            } else if (!user) {
-                return callback(
-                    new Error('User not found.')
-                );
+        .then((user) => {
+            if (!user) {
+                return callback({ error: 'User not found.' });
             }
 
             bcrypt.compare(password, user.password, (err, result) => {
                 if (result === true) {
-                    return callback(null, user);
+                    return callback({ user });
                 } else {
-                    return callback(
-                        new Error('Wrong password.')
-                    );
+                    return callback({ error: 'Wrong password.' });
                 }
             });
+        })
+        .catch((error) => {
+            return callback({ error });
         });
 };
 

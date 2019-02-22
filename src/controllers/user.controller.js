@@ -42,18 +42,20 @@ const create = (req, res) => {
 
 const login = (req, res) => {
     const { body: reqBody } = req;
-    const { email, password } = reqBody;
+    const { user: { email, password } } = reqBody;
 
     if (email && password) {
-        User.authenticate({ email, password }, (error, user) => {
+        User.authenticate({ email, password }, ({ error, user }) => {
             if (error || !user) {
+                console.error('Error: ', error);
+
                 return res.status(400).send({
                     message: 'Wrong email or password.',
-                    error: error || 'Wrong email or password.',
+                    error,
                 });
             }
 
-            jwt.sign(user, 'secret', {
+            jwt.sign(user.toJSON(), 'secret', {
                 expiresIn: 3600
             }, (err, token) => {
                 if(err) {
@@ -61,18 +63,13 @@ const login = (req, res) => {
 
                     return res.status(400).send({
                         message: 'There is some error in token.',
-                        error: err,
+                        error: JSON.stringify(err),
                     });
                 }
 
                 return res.status(200).json({
                     success: true,
                     token: `Bearer ${token}`,
-                    user: {
-                        id: user._id,
-                        username: user.username,
-                        email: user.email,
-                    },
                     message: 'Login succeeded.',
                     error: '',
                 });
