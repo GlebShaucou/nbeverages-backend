@@ -18,22 +18,23 @@ const getAll = (req, res) => {
 };
 
 const getById = (req, res) => {
-    Beverage.findById(req.body.beverageId)
+    Beverage.findById(req.params.beverageId)
         .then(beverage => {
             if(!beverage) {
-                return res.status(200).send({
-                    message: `Beverage with id ${req.body.beverageId} not found`,
-                    beverage: null,
-                    error: '',
+                return res.status(400).send({
+                    message: `Beverage with id ${req.params.beverageId} not found`,
+                    error: `Beverage with id ${req.params.beverageId} not found`,
                 });
             }
 
-            res.status(200).send(beverage);
+            res.status(200).send({
+                beverage,
+                error: '',
+            });
         }).catch(error => {
         if(error.kind === 'ObjectId') {
             return res.status(400).send({
                 message: `Beverage with id ${req.body.beverageId} not found`,
-                beverage: null,
                 error,
             });
         }
