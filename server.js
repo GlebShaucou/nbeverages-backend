@@ -6,6 +6,7 @@ const passport = require('passport');
 const dbConfig = require('./config/database.config');
 const beverageRoutes = require('./src/routes/beverage.routes');
 const userRoutes = require('./src/routes/user.routes');
+const orderRoutes = require('./src/routes/order.routes');
 
 mongoose.connect(dbConfig.url, { useNewUrlParser: true })
     .then(() => {
@@ -46,6 +47,7 @@ app.get('/', (req, res) => {
 
 beverageRoutes(app);
 userRoutes(app);
+orderRoutes(app);
 
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
