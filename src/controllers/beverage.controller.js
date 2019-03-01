@@ -2,7 +2,7 @@ const Beverage = require('../models/beverage.model');
 const utils = require('../utils');
 
 const getAll = (req, res) => {
-    Beverage.find()
+    Beverage.find().where(req.query)
         .then(beverages => {
             res.status(200).send({
                 beverages,
