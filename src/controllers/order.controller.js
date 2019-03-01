@@ -17,12 +17,21 @@ const getAll = (req, res) => {
 };
 
 const getById = (req, res) => {
-    Order.findById(req.params.orderId)
+    const { orderId } = req.params;
+
+    if (!orderId.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(500).send({
+            message: 'Some error occurred.',
+            error: 'Invalid order ID',
+        });
+    }
+
+    Order.findById(orderId)
         .then(order => {
             if(!order) {
                 return res.status(400).send({
-                    message: `order with id ${req.params.orderId} not found`,
-                    error: `order with id ${req.params.orderId} not found`,
+                    message: `order with id ${orderId} not found`,
+                    error: `order with id ${orderId} not found`,
                 });
             }
 
