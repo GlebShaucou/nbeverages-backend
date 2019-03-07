@@ -21,6 +21,8 @@ mongoose.connect(dbConfig.url, { useNewUrlParser: true })
 const app = express();
 const port = process.env.PORT || 3003;
 
+app.disable('x-powered-by');
+
 app.use(passport.initialize());
 
 require('./passport')(passport);
