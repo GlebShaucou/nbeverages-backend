@@ -5,6 +5,7 @@ const OrderSchema = mongoose.Schema({
     customerName: String,
     paymentMethod: String,
     customerEmail: String,
+    deliveryMethod: String,
     deliveryAddress: String,
     customerPhone: String,
     totalAmount: String,
