@@ -19,14 +19,7 @@ const getAll = (req, res) => {
 const getById = (req, res) => {
     const { orderId } = req.params;
 
-    if (!orderId.match(/^[0-9a-fA-F]{24}$/)) {
-        return res.status(500).send({
-            message: 'Some error occurred.',
-            error: 'Invalid order ID',
-        });
-    }
-
-    Order.findById(orderId)
+    Order.findOne({ orderId })
         .then(order => {
             if(!order) {
                 return res.status(400).send({
