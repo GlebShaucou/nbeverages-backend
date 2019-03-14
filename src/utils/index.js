@@ -25,7 +25,7 @@ const validateNewBeverage = (beverage) => {
         return getValidationErrorMessage('category');
     }
 
-    if (!beverage.quantity) {
+    if (!beverage.quantityPerUnit) {
         return getValidationErrorMessage('quantity');
     }
 
