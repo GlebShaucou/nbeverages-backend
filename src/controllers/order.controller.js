@@ -72,14 +72,14 @@ const create = (req, res) => {
 };
 
 const update = (req, res) => {
-    if(!req.body.type) {
+    if(!req.body.orderId) {
         return res.status(400).send({
             message: 'Request type can not be empty.',
             error: 'Request may not be empty',
         });
     }
 
-    Order.findByIdAndUpdate(req.body.orderId, {
+    Order.findByIdAndUpdate(req.body._id, {
         ...req.body,
     }, { new: true })
         .then(order => {
@@ -104,7 +104,7 @@ const deleteById = (req, res) => {
         .then(order => {
             if(!order) {
                 return res.status(400).send({
-                    message: `Beverage with id ${req.body.orderId} not found`,
+                    message: `Order with id ${req.body.orderId} not found`,
                     error: '',
                 });
             }
