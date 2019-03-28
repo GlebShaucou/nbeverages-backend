@@ -18,7 +18,7 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    category: {
+    role: {
         type: String,
         trim: true,
     },

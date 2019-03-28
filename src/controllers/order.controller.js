@@ -1,4 +1,29 @@
+const nodemailer = require('nodemailer');
 const Order = require('../models/order.model');
+
+const sendEmail = (toEmail, orderId) => {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'teacityminsk@gmail.com',
+            pass: 'tea#Drinker89',
+        },
+    });
+    const mailOptions = {
+        from: 'teacityminsk@gmail.com',
+        to: toEmail,
+        subject: `Заказ ${orderId} создан`,
+        text: `Спасибо за заказ. Номер вашего заказа ${orderId}`,
+    };
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+};
 
 const getAll = (req, res) => {
     Order.find()
@@ -58,6 +83,8 @@ const create = (req, res) => {
 
     beverage.save()
         .then(order => {
+            sendEmail(order.customerEmail, order.orderId);
+
             return res.status(200).send({
                 order,
                 error: '',

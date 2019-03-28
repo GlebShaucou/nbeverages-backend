@@ -1,5 +1,5 @@
 {
-  "name": "nbeverages-backend",
+  "name": "tea-city-backend",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -16,6 +16,7 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.4.0",
+    "nodemailer": "^6.0.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0"
   },
