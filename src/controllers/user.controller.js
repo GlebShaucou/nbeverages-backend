@@ -22,7 +22,7 @@ const create = (req, res) => {
         .then(data => {
             res.status(200).send({
                 message: 'New user was created',
-                error: [],
+                error: '',
                 user: {
                     userId: user._id,
                     username: user.username,
