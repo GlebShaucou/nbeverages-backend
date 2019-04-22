@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
 
 const BeverageSchema = mongoose.Schema({
-    category: String,
-    type: String,
+    category: {
+        label: String,
+        value: String,
+    },
+    type: {
+        label: String,
+        value: String,
+    },
     imgSrc: String,
     name: String,
     description: String,
