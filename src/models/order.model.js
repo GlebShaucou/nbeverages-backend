@@ -2,16 +2,29 @@ const mongoose = require('mongoose');
 
 const OrderSchema = mongoose.Schema({
     orderId: String,
-    items: Array,
+    date: String,
+    status: {
+        label: String,
+        value: String,
+    },
     customerName: String,
-    paymentMethod: String,
+    paymentMethod: {
+        label: String,
+        value: String,
+    },
     customerEmail: String,
-    deliveryMethod: String,
+    deliveryMethod: {
+        label: String,
+        value: String,
+    },
     deliveryAddress: String,
     customerPhone: String,
-    totalAmount: String,
-    currency: String,
-    status: String,
+    totalAmount: Number,
+    currency: {
+        label: String,
+        value: String,
+    },
+    items: Array,
 });
 
 module.exports = mongoose.model('Order', OrderSchema);

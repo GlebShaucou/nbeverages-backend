@@ -6,9 +6,19 @@ const BeverageSchema = mongoose.Schema({
     imgSrc: String,
     name: String,
     description: String,
-    quantityPerUnit: String,
-    price: String,
-    currency: String,
+    availablePackaging: [Number],
+    packingUnit: {
+        label: String,
+        value: String,
+    },
+    standartPackaging: Number,
+    standartPackagingPrice: {
+        amount: Number,
+        currency: {
+            label: String,
+            value: String,
+        },
+    },
 });
 
 module.exports = mongoose.model('Beverage', BeverageSchema);
