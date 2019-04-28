@@ -13,11 +13,11 @@ const BeverageSchema = mongoose.Schema({
     name: String,
     description: String,
     availablePackaging: [Number],
+    standartPackaging: Number,
     packingUnit: {
         label: String,
         value: String,
     },
-    standartPackaging: Number,
     standartPackagingPrice: {
         amount: Number,
         currency: {
