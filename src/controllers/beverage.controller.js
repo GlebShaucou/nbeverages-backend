@@ -48,14 +48,14 @@ const getById = (req, res) => {
 
 const create = (req, res) => {
     const requestBody = req.body;
-    const errorMessage = utils.validateNewBeverage(requestBody);
+    // const errorMessage = utils.validateNewBeverage(requestBody);
 
-    if (errorMessage) {
-        return res.status(400).send({
-            message: 'Validation error occurred.',
-            error: errorMessage,
-        });
-    }
+    // if (errorMessage) {
+    //     return res.status(400).send({
+    //         message: 'Validation error occurred.',
+    //         error: errorMessage,
+    //     });
+    // }
 
     const beverage = new Beverage({
         ...requestBody,
