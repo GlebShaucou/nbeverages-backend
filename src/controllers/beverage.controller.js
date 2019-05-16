@@ -120,10 +120,29 @@ const deleteById = (req, res) => {
         });
 };
 
+const getFiltered = (req, res) => {
+    const requestBody = req.body;
+
+    Beverage.find(requestBody)
+        .then(beverages => {
+            res.status(200).send({
+                beverages,
+                error: '',
+            });
+        })
+        .catch(error => {
+            res.status(500).send({
+                message: 'Some error occurred.',
+                error,
+            });
+        });
+};
+
 module.exports = {
     getAll,
     getById,
     create,
     update,
     deleteById,
+    getFiltered,
 };

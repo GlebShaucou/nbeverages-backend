@@ -10,4 +10,6 @@ module.exports = (app) => {
     app.put('/api/beverages', beverage.update);
 
     app.delete('/api/beverages', beverage.deleteById);
+
+    app.post('/api/filtered-beverages', beverage.getFiltered);
 };
