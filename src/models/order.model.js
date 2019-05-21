@@ -7,6 +7,14 @@ const OrderSchema = mongoose.Schema({
         label: String,
         value: String,
     },
+    totalPrice: {
+        amount: Number,
+        currency: {
+            label: String,
+            value: String,
+        },
+    },
+    items: Array,
     customerName: String,
     paymentMethod: {
         label: String,
@@ -19,12 +27,6 @@ const OrderSchema = mongoose.Schema({
     },
     deliveryAddress: String,
     customerPhone: String,
-    totalAmount: Number,
-    currency: {
-        label: String,
-        value: String,
-    },
-    items: Array,
 });
 
 module.exports = mongoose.model('Order', OrderSchema);

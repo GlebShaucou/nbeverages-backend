@@ -78,7 +78,6 @@ const create = (req, res) => {
 
     const beverage = new Order({
         ...requestBody,
-        status: 'new',
     });
 
     beverage.save()
